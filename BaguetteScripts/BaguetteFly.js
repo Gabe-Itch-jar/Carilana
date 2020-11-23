@@ -1,7 +1,7 @@
 /// api_version=2
 var script = registerScript({
 	name: "Baguette Fly",
-	version: "2.0",
+	version: "2.1",
 	authors: ["Du_Couscous, mmk"]
 });
 
@@ -59,6 +59,16 @@ script.registerModule({
 		RedeBlink: Setting.boolean({
 			name: "RedeskyUseBlink",
 			default: false
+		}),
+		RedeTimer: Setting.boolean({
+			name: "RedeskyTimerBoost",
+			default: false
+		}),
+		RedeTimerVal: Setting.float({
+			name: "RedeskyTimer",
+			default: 1.05,
+			min: 1.0,
+			max:1.2
 		}),
 		MsgOnToggle: Setting.boolean({
 			name: "ToggleMessage",
@@ -133,9 +143,6 @@ script.registerModule({
 	});
 
 	module.on("disable", function () {
-		if(module.settings.MsgOnToggle.get() == true) {
-			Chat.print("§cBaguette Fly §lDisabled")
-		}
 		mc.timer.timerSpeed = 1;
 		if (module.settings.RedeBlink.get() == true) {
 			blink.setState(true);
@@ -183,8 +190,14 @@ var sword;
 
 		if (module.settings.Mode.get() == "Redesky") {
 			mc.timer.timerSpeed = 0.3;
+			if(module.settings.RedeTimer.get() == true) {
+				mc.timer.timerSpeed = module.settings.RedeTimerVal.get();
+			}
 			hClip2(module.settings.RedeBoost.get());
 			vClip2(10);
+			if(module.settings.RedeTimer.get() == true) {
+				mc.timer.timerSpeed = 0.3;
+			}
 			vClip(-0.5);
 			hClip(2);
 			setSpeed(1);
