@@ -5,7 +5,6 @@ var script = registerScript({
     authors: ["Du_Couscous, mmk"]
 });
 
-
 var fstate = 0;
 var mstate = 0;
 var state2 = 0;
