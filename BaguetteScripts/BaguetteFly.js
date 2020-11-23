@@ -68,7 +68,7 @@ script.registerModule({
 }, function (module) {
 	module.on("enable", function () {
 		if(module.settings.MsgOnToggle.get() == true) {
-			Chat.print("§a§lCarilana Scripts https://discord.gg/FJaUd5efJK")
+			Chat.print("§aBaguette Fly §lEnabled")
 		}
 
 		jumpstate = 0;
@@ -133,6 +133,9 @@ script.registerModule({
 	});
 
 	module.on("disable", function () {
+		if(module.settings.MsgOnToggle.get() == true) {
+			Chat.print("§cBaguette Fly §lDisabled")
+		}
 		mc.timer.timerSpeed = 1;
 		if (module.settings.RedeBlink.get() == true) {
 			blink.setState(true);
