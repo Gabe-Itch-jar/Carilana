@@ -1,8 +1,8 @@
 /// api_version=2
 var script = registerScript({
-    name: "Baguette Fly",
-    version: "2.0",
-    authors: ["Du_Couscous, mmk"]
+	name: "Baguette Fly",
+	version: "2.0",
+	authors: ["Du_Couscous, mmk"]
 });
 
 var fstate = 0;
@@ -23,61 +23,61 @@ function setSpeed(_speed) {
 }
 
 script.registerModule({
-    name: "BaguetteFly",
-    description: "Be a bird",
-    category: "Movement",
-    settings: {
-        Mode: Setting.list({
-            name: "Mode",
-            default: "Redesky",
+	name: "BaguetteFly",
+	description: "Be a bird",
+	category: "Movement",
+	settings: {
+		Mode: Setting.list({
+			name: "Mode",
+			default: "Redesky",
 			values: ["BoatMatrix", "OldACR", "BrwServ","Matrix","MatrixNoVoid","MatrixNoVoid2","BoatLastAAC","Cubecraft","Cubecraft2","NewMatrix","Taka","AntiAC","Redesky","Redesky2"]
-        }),
-        BrwTick: Setting.float({
-            name: "BrwSpeed",
-            default: 21.49,
+		}),
+		BrwTick: Setting.float({
+			name: "BrwSpeed",
+			default: 21.49,
 			min: 10,
 			max:40
-        }),
-        BrwTimer: Setting.float({
-            name: "BrwTimer",
-            default: 2,
+		}),
+		BrwTimer: Setting.float({
+			name: "BrwTimer",
+			default: 2,
 			min: 0.5,
 			max:3
-        }),
-        RedeV: Setting.float({
-            name: "RedeskyY",
-            default: 1.54,
+		}),
+		RedeV: Setting.float({
+			name: "RedeskyY",
+			default: 1.54,
 			min: 0.5,
 			max:4
-        }),
-        RedeBoost: Setting.float({
-            name: "RedeskyBoost",
-            default: 9.30,
+		}),
+		RedeBoost: Setting.float({
+			name: "RedeskyBoost",
+			default: 9.30,
 			min: 2,
 			max:12
-        }),
-        RedeBlink: Setting.boolean({
-            name: "RedeskyUseBlink",
-            default: false
-        }),
-        MsgOnToggle: Setting.boolean({
-            name: "ToggleMessage",
-            default: false
-        })
+		}),
+		RedeBlink: Setting.boolean({
+			name: "RedeskyUseBlink",
+			default: false
+		}),
+		MsgOnToggle: Setting.boolean({
+			name: "ToggleMessage",
+			default: false
+		})
 	}
 }, function (module) {
-    module.on("enable", function () {
-    	if(module.settings.MsgOnToggle.get() == true) {
-    		Chat.print("§a§lCarilana Scripts https://discord.gg/FJaUd5efJK")
-    	}
+	module.on("enable", function () {
+		if(module.settings.MsgOnToggle.get() == true) {
+			Chat.print("§a§lCarilana Scripts https://discord.gg/FJaUd5efJK")
+		}
 
 		jumpstate = 0;
-    	mstate = 21.49;
-    	dist = mc.thePlayer.posY;
-    	mc.thePlayer.ticksExisted = 0;
+		mstate = 21.49;
+		dist = mc.thePlayer.posY;
+		mc.thePlayer.ticksExisted = 0;
 		if (module.settings.Mode.get() == "Cubecraft") {
-    	  	MovementUtils.setSpeed(0.0);
-    	  	mc.thePlayer.motionY = -0.800000011920929;
+		  	MovementUtils.setSpeed(0.0);
+		  	mc.thePlayer.motionY = -0.800000011920929;
 		}
 		if (module.settings.Mode.get() == "Redesky") {
 			if (module.settings.RedeBlink.get() == true) {
@@ -109,7 +109,7 @@ script.registerModule({
 			mc.timer.timerSpeed = 0.4;
 		}
 		matrixfly = 0;
-    });
+	});
 
 		module.on("packet", function (event) {
 		var packet = event.getPacket();
@@ -122,15 +122,15 @@ script.registerModule({
 		if (packet instanceof S12 && packet.getEntityID() == mc.thePlayer.getEntityId() && hasReset) {
 			hasReset = false;
 			event.cancelEvent();
-		}      
-    });
+		}	  
+	});
 
-    module.on("move", function (event) {
-      	if (jumpstate == 1 && !mc.thePlayer.onGround) {
+	module.on("move", function (event) {
+	  	if (jumpstate == 1 && !mc.thePlayer.onGround) {
 			event.setX(0);
 			event.setZ(0);
 		}
-    });
+	});
 
 	module.on("disable", function () {
 		mc.timer.timerSpeed = 1;
@@ -144,7 +144,7 @@ script.registerModule({
 		if (module.settings.Mode.get() == "Redesky") {
 			hClip2(0);
 		}
-    });
+	});
 
 var pl = [];
 var matrixfly = 0;
@@ -242,88 +242,88 @@ var sword;
 		}
 
 		if (module.settings.Mode.get() == "Cubecraft") {
-		    mc.timer.timerSpeed = 0.1;
-		    mc.thePlayer.onGround = false;
-		    mc.thePlayer.jumpMovementFactor = 0.0;
-		    if (mc.thePlayer.ticksExisted % 2 == 0) {
-		      	setSpeed(2.0);
-		      	mc.thePlayer.motionY = 0.20000000298023224;
-		    } else {
-		      	mc.thePlayer.motionY = 0.0;
-		    	setSpeed(0.0);
-		    }
+			mc.timer.timerSpeed = 0.1;
+			mc.thePlayer.onGround = false;
+			mc.thePlayer.jumpMovementFactor = 0.0;
+			if (mc.thePlayer.ticksExisted % 2 == 0) {
+			  	setSpeed(2.0);
+			  	mc.thePlayer.motionY = 0.20000000298023224;
+			} else {
+			  	mc.thePlayer.motionY = 0.0;
+				setSpeed(0.0);
+			}
 		}
 
 		if (module.settings.Mode.get() == "Cubecraft2") {
-		    mc.timer.timerSpeed = 0.2;
-		    if (mc.thePlayer.onGround) {
-		    	mc.thePlayer.motionY = 0.5;
-		    }
-		    setSpeed(0.5);
-		    mc.thePlayer.jumpMovementFactor = 0.0;
-		    if (mc.thePlayer.ticksExisted % 2 == 0) {
-		    	hClip(1);
-		    }
+			mc.timer.timerSpeed = 0.2;
+			if (mc.thePlayer.onGround) {
+				mc.thePlayer.motionY = 0.5;
+			}
+			setSpeed(0.5);
+			mc.thePlayer.jumpMovementFactor = 0.0;
+			if (mc.thePlayer.ticksExisted % 2 == 0) {
+				hClip(1);
+			}
 		}
 
 		if (module.settings.Mode.get() == "AntiAC") {
-		    mc.timer.timerSpeed = 2;
-		    mc.thePlayer.onGround = false;
-		    mc.thePlayer.jumpMovementFactor = 0.0;
-		    if (mc.thePlayer.ticksExisted % 3 == 0) {
-		      	mc.thePlayer.motionY = 0.080000000298023224;
-		    	setMoveSpeed(2);
-		    	if (mc.gameSettings.keyBindJump.isKeyDown()) {
-		    		vClip(1);
-		    	}
-		    	if (mc.gameSettings.keyBindSneak.isKeyDown()) {
-		    		vClip(-1);
-		    	}
-		    } else {
-		      	mc.thePlayer.motionY = -0.04;
-		    	setSpeed(0);
-		    }
+			mc.timer.timerSpeed = 2;
+			mc.thePlayer.onGround = false;
+			mc.thePlayer.jumpMovementFactor = 0.0;
+			if (mc.thePlayer.ticksExisted % 3 == 0) {
+			  	mc.thePlayer.motionY = 0.080000000298023224;
+				setMoveSpeed(2);
+				if (mc.gameSettings.keyBindJump.isKeyDown()) {
+					vClip(1);
+				}
+				if (mc.gameSettings.keyBindSneak.isKeyDown()) {
+					vClip(-1);
+				}
+			} else {
+			  	mc.thePlayer.motionY = -0.04;
+				setSpeed(0);
+			}
 		}
 
 		if (module.settings.Mode.get() == "Taka") { //This does not bypass redesky
-		    mc.thePlayer.onGround = true;
-		    mc.thePlayer.jumpMovementFactor = 0.0;
-		    mc.thePlayer.motionY = -0.05;
-		    mc.timer.timerSpeed = 0.1;
-		    if (mc.thePlayer.ticksExisted % 2 == 0) {
-		    	hClip2(10);
-		    	vClip2(4);
-		    	setSpeed(2);
-		    } else {
-		      	//mc.thePlayer.motionY = 0.0;
-		    	setSpeed(0);
-		    }
+			mc.thePlayer.onGround = true;
+			mc.thePlayer.jumpMovementFactor = 0.0;
+			mc.thePlayer.motionY = -0.05;
+			mc.timer.timerSpeed = 0.1;
+			if (mc.thePlayer.ticksExisted % 2 == 0) {
+				hClip2(10);
+				vClip2(4);
+				setSpeed(2);
+			} else {
+			  	//mc.thePlayer.motionY = 0.0;
+				setSpeed(0);
+			}
 		}
 
 		if (module.settings.Mode.get() == "TestSpartan") {
 			if (mc.gameSettings.keyBindAttack.isKeyDown()) {
-		      	sword = mc.thePlayer.getCurrentEquippedItem();
-		      	sword.useItemRightClick(mc.theWorld, mc.thePlayer);
-	    	} 
+			  	sword = mc.thePlayer.getCurrentEquippedItem();
+			  	sword.useItemRightClick(mc.theWorld, mc.thePlayer);
+			} 
 		}
 
 		if (module.settings.Mode.get() == "NewMatrix") {
 			if (mc.thePlayer.fallDistance > 3) {
-			    mc.timer.timerSpeed = 0.2;
-			    mc.thePlayer.onGround = false;
-			    if (mc.thePlayer.ticksExisted % 3 == 0) {
-			      	mc.thePlayer.motionY = -0.05;
-			    }
+				mc.timer.timerSpeed = 0.2;
+				mc.thePlayer.onGround = false;
+				if (mc.thePlayer.ticksExisted % 3 == 0) {
+				  	mc.thePlayer.motionY = -0.05;
+				}
 			}
 		}
 
 		if (module.settings.Mode.get() == "MatrixNoVoid2") {
 			if (mc.thePlayer.fallDistance > 3) {
-			    mc.timer.timerSpeed = 0.4;
-			    mc.thePlayer.onGround = false;
-			    if (mc.thePlayer.ticksExisted % 2 == 0) {
-			      	mc.thePlayer.motionY = -0.01;
-			    }
+				mc.timer.timerSpeed = 0.4;
+				mc.thePlayer.onGround = false;
+				if (mc.thePlayer.ticksExisted % 2 == 0) {
+				  	mc.thePlayer.motionY = -0.01;
+				}
 			}
 		}
 
@@ -337,10 +337,12 @@ var sword;
 			fstate = 0
 			if (module.settings.Mode.get() == "BrwServ") {
 				mc.thePlayer.jump();
+				}
 			}
-		}
-    });
+		});
+	});
 });
+
 
 //functions
 
@@ -369,11 +371,11 @@ function vClip2(d) {
 	mc.getNetHandler().addToSendQueue(new C04(mc.thePlayer.posX, mc.thePlayer.posY+d, mc.thePlayer.posZ, false));
 }
 function chatSyntax(message) {
-    Chat.print("§8[§9§lMacros§8] §3Syntax: §7" + prefix + message);
+	Chat.print("§8[§9§lMacros§8] §3Syntax: §7" + prefix + message);
 }
 
 function chatText(message) {
-    Chat.print("§8[§9§lMacros§8] §3" + message);
+	Chat.print("§8[§9§lMacros§8] §3" + message);
 }
 
 function aacDamage(damages) {
@@ -413,5 +415,5 @@ var S12 = Java.type('net.minecraft.network.play.server.S12PacketEntityVelocity')
 
 
 Math.radians = function(degrees) {
-    return degrees * Math.PI / 180;
+	return degrees * Math.PI / 180;
 };
