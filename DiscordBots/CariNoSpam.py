@@ -7,8 +7,8 @@ import time
 b = commands.Bot(command_prefix="CariNoSpam bot")
 b.remove_command("help")
 
-time_window_milliseconds = 2500 //the user could only post ___ messages in (___) milliseconds
-max_msg_per_window = 3 //the user could only post (___) messages in those ___ milliseconds
+time_window_milliseconds = 2500 #the user could only post ___ messages in (___) milliseconds
+max_msg_per_window = 3 #the user could only post (___) messages in those ___ milliseconds I'M DUMB
 author_msg_times = {}
 
 @b.event
