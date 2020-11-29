@@ -1,7 +1,7 @@
 /// api_version=2
 var script = registerScript({
 	name: "Baguette Fly",
-	version: "2.1",
+	version: "2.2",
 	authors: ["Du_Couscous, mmk"]
 });
 
@@ -30,7 +30,7 @@ script.registerModule({
 		Mode: Setting.list({
 			name: "Mode",
 			default: "Redesky",
-			values: ["BoatMatrix", "OldACR", "BrwServ","Matrix","MatrixNoVoid","MatrixNoVoid2","BoatLastAAC","Cubecraft","Cubecraft2","NewMatrix","Taka","AntiAC","Redesky","Redesky2"]
+			values: ["BoatMatrix", "Verus", "BrwServ","Matrix","MatrixNoVoid","MatrixNoVoid2","BoatLastAAC","Cubecraft","Cubecraft2","NewMatrix","AntiAC","Redesky","Redesky2", "Redesky3", "Redesky4", "Redesky5","Redesky6/Taka"]
 		}),
 		BrwTick: Setting.float({
 			name: "BrwSpeed",
@@ -56,6 +56,18 @@ script.registerModule({
 			min: 2,
 			max:12
 		}),
+		Rede5B: Setting.float({
+			name: "Redesky5Boost",
+			default: 3,
+			min: 1.0,
+			max:7
+		}),
+		Rede5Y: Setting.float({
+			name: "Redesky5Y",
+			default: 10,
+			min:4.0,
+			max:12
+		}),
 		RedeBlink: Setting.boolean({
 			name: "RedeskyUseBlink",
 			default: false
@@ -78,7 +90,7 @@ script.registerModule({
 }, function (module) {
 	module.on("enable", function () {
 		if(module.settings.MsgOnToggle.get() == true) {
-			Chat.print("§aBaguette Fly §lEnabled")
+			Chat.print("§a§lCarilana Scripts https://discord.gg/FJaUd5efJK")
 		}
 
 		jumpstate = 0;
@@ -98,6 +110,10 @@ script.registerModule({
 			}
 		}
 
+
+		if (module.settings.Mode.get() == "Redesky5") {
+			dist = mc.thePlayer.posY
+		}
 		if (module.settings.Mode.get() == "Redesky2") {
 			if (mc.thePlayer.onGround) {
 				hClip2(10);
@@ -140,10 +156,16 @@ script.registerModule({
 			event.setX(0);
 			event.setZ(0);
 		}
+		if(module.settings.Mode.get() == "Redesky5") {
+			if(mc.gameSettings.keyBindJump.isKeyDown() == true) {
+				vClip2(4.151)
+			}
+		}
 	});
 
 	module.on("disable", function () {
 		mc.timer.timerSpeed = 1;
+		blink.setState(false)
 		if (module.settings.RedeBlink.get() == true) {
 			blink.setState(true);
 			blink.setState(false);
@@ -160,6 +182,7 @@ var pl = [];
 var matrixfly = 0;
 var sword;
 	module.on("update", function () {
+
 		if (module.settings.Mode.get() == "BoatMatrix") {
 			if (mc.thePlayer.isRiding()) {
 				jumpstate = 1;
@@ -173,6 +196,7 @@ var sword;
 				}
 			}
 		}
+
 
 		if (module.settings.Mode.get() == "BoatLastAAC") {
 			if (mc.thePlayer.isRiding()) {
@@ -215,6 +239,49 @@ var sword;
 			mc.thePlayer.motionY = -0.01;
 		}
 
+		if(module.settings.Mode.get() == "Redesky3") {
+			if (mc.thePlayer.onGround) {
+				Chat.print("§b[BaguetteFly] §cYou must jump into the void and activate this fly!")
+				Chat.print("§b[BaguetteFly] §c[Disabled]")
+				module.setState(false);
+			} else {
+				setSpeed(0.5)
+				mc.timer.timerSpeed = 0.31;
+				vClip2(10)
+				if(mc.thePlayer.keyBindForwards.isKeyDown()) {
+					hClip2(6.38)
+					vClip(-0.1)
+					hClip(1)
+					setSpeed(1)
+				}
+			}
+		}
+
+
+		if(module.settings.Mode.get() == "Redesky4") {
+			if (mc.thePlayer.onGround) {
+				Chat.print("§b[BaguetteFly] §cYou must jump into the void and activate this fly!")
+				Chat.print("§b[BaguetteFly] §c[Disabled]")
+				module.setState(false);
+			} else {
+				mc.timer.timerSpeed = 0.3;
+				hClip2(module.settings.RedeBoost.get());
+				vClip(-0.5);
+				hClip(2);
+				setSpeed(1);
+				mc.thePlayer.motionY = -0.01;
+			}
+		}
+
+		if(module.settings.Mode.get() == "Redesky5") {
+			yClip(dist)
+            hClip(module.settings.Rede5B.get())
+            hClip2(2)
+            vClip2(module.settings.Rede5Y.get())
+            setSpeed(1)
+            mc.timer.timerSpeed = 0.3;
+            mc.thePlayer.motionY = -0.01;
+		}
 
 		if (module.settings.Mode.get() == "LastAAC") {
 			if (mc.thePlayer.onGround) {
@@ -301,7 +368,7 @@ var sword;
 			}
 		}
 
-		if (module.settings.Mode.get() == "Taka") { //This does not bypass redesky
+		if (module.settings.Mode.get() == "Redesky6/Taka") {
 			mc.thePlayer.onGround = true;
 			mc.thePlayer.jumpMovementFactor = 0.0;
 			mc.thePlayer.motionY = -0.05;
@@ -364,6 +431,9 @@ var sword;
 
 function vClip(d) {
 	mc.thePlayer.setPosition(mc.thePlayer.posX, mc.thePlayer.posY + d, mc.thePlayer.posZ);
+}
+function yClip(d) {
+    mc.thePlayer.setPosition(mc.thePlayer.posX, d, mc.thePlayer.posZ);
 }
 function xClip(d) {
 	mc.thePlayer.setPosition(mc.thePlayer.posX + d, mc.thePlayer.posY, mc.thePlayer.posZ);
@@ -428,7 +498,6 @@ var C04 = Java.type("net.minecraft.network.play.client.C03PacketPlayer.C04Packet
 var C02 = Java.type("net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition");
 var S08 = Java.type('net.minecraft.network.play.server.S08PacketPlayerPosLook');
 var S12 = Java.type('net.minecraft.network.play.server.S12PacketEntityVelocity');
-
 
 Math.radians = function(degrees) {
 	return degrees * Math.PI / 180;
