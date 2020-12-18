@@ -1,8 +1,0 @@
-How to Install Scripts
-1. Have LiquidBounce Latest Nightly Version (scroll down on downloads page) installed (Put in mods folder)
-2. Navigate to %appdata%/.minecraft/LiquidBounce 1.8/scripts
-3. Copy the Script from the Github (click the Raw button then do CTRL+A)
-4. Create a new file called AnythingYouWant.js (must end with js) and paste the script you copied there
-5. Launch Liquidbounce, it should be there! you should see it in the clickgui, and be able to bind and toggle it
-6. If it doesnt work, try .scripts reload, and beyond that point you did something wrong.
-(https://pastebin.com/gUfP9Cxm)
