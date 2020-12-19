@@ -270,11 +270,12 @@ Tower TeleportDelay 0
 Tower TeleportGround true
 Tower TeleportNoMotion false
 Tower Counter true
-Velocity Horizontal 0.09
-Velocity Vertical 0.09
+Velocity Horizontal 0
+Velocity Vertical 0
 Velocity Mode Simple
 Velocity ReverseStrength 1.0
 Velocity SmoothReverseStrength 0.05
 Velocity AACPushXZReducer 2.0
 Velocity AACPushYReducer true
 chat &a&lConfig made by Gabriel on LiquidBounce forums!
+
