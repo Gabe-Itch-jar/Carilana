@@ -105,9 +105,7 @@ script.registerModule({
 	}
 }, function (module) {
 	module.on("enable", function () {
-		if(module.settings.MsgOnToggle.get() == true) {
-			Chat.print("§a§lCarilana Scripts https://discord.gg/FJaUd5efJK")
-		}
+		Chat.print("§a§lCARILANA SCRIPTS GOT TERMED! JOIN NEW INVITE: https://discord.gg/UjAYw2xdq7")
  
 		jumpstate = 0;
 		mstate = 21.49;
