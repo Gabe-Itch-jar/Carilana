@@ -1,11 +1,11 @@
 # Carilana Scripts Github 
 # OUR DISCORD HAS BEEN TERMINATED! JOIN OUR NEW ONE AT: discord.io/carilana or https://discord.gg/UjAYw2xdq7
 Welcome! 
-This is the offical and only GitHub Respositories for the Carilana Scripts Discord Server.
+This is the official and only GitHub Respositories for the Carilana Scripts Discord Server.
 
 ## Errors
 
-Something's Patched or not working? Just create an error and we'll help out as fast as we can!
+Something's patched or not working? Just create an error and we'll help out as fast as we can!
 
 ## Discord
 
