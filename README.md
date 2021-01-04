@@ -30,3 +30,19 @@ We develop various bypasses and modules for LiquidBounce. More information is gi
   </p>
 </details>
 
+<details>
+      <summary>Tutorials</summary>
+  <p align=center>
+    The tutorials can be found inside the Tutorials folder. If you want, you can request more tutorials to be added.
+  </p>
+</details>
+
+<details>
+      <summary>More Scripts</summary>
+  <p align=center>
+    Some good sources for scripts are: https://github.com/CzechHek/Core/Scripts
+                                       https://forums.ccbluex.net/category/9/scripts // https://forum.ccbluex.net/viewforum.php?id=16 (Old)
+                                       Our Discord channel for sharing scripts, configs and more.
+  </p>
+</details>
+
