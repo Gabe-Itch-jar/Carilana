@@ -101,7 +101,27 @@ script.registerModule({
 		MsgOnToggle: Setting.boolean({
 			name: "ToggleMessage",
 			default: false
-		})
+		}),
+		BoatY: Setting.float({
+			name: "BoatY",
+			default: 0.5,
+			min:0.5,
+			max:5
+		}),
+		BoatBoost: Setting.float({
+			name: "BoatBoost",
+			default: 3,
+			min:3,
+			max:5
+		}),
+        	AutoSneak: Setting.boolean({
+            		name: "AutoSneak",
+            		default: true
+		}),
+                BoatJartex: Setting.boolean({
+            		name: "BoatJartex",
+            		default: true
+		}),
 	}
 }, function (module) {
 	module.on("enable", function () {
@@ -215,14 +235,24 @@ var sword;
  
 		if (module.settings.Mode.get() == "BoatMatrix") {
 			if (mc.thePlayer.isRiding()) {
-				jumpstate = 1;
-				ncp = 0;
+			if (module.settings.AutoSneak.get()) {
+			mc.gameSettings.keyBindSneak.pressed = true;
+			}
+			jumpstate = 1;
+			if (module.settings.BoatJartex.get()) {
+			mc.timer.timerSpeed = 0.3;
+			}	
 			} else { 
+				mc.timer.timerSpeed = 1;
 				if (jumpstate == 1) {
+					if (module.settings.AutoSneak.get()) {
+					mc.gameSettings.keyBindSneak.pressed = false;
+					}
 					jumpstate = 0;
 					mc.timer.timerSpeed = 1;
-					mc.thePlayer.motionY = 0.5;
-					setSpeed(2.5);
+					mc.thePlayer.sendQueue.addToSendQueue(new C03(true));
+					mc.thePlayer.motionY = module.settings.BoatY.get();
+					setSpeed(module.settings.BoatBoost.get());
 				}
 			}
 		}
@@ -560,7 +590,8 @@ function getSpeed() {
 	return Math.sqrt(Math.pow(mc.thePlayer.motionX,2) + Math.pow(mc.thePlayer.motionZ,2))
 }
 function getRandom(max) {return Math.floor(Math.random() * Math.floor(max))};
- 
+
+var C03 = Java.type("net.minecraft.network.play.client.C03PacketPlayer");
 var C04 = Java.type("net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition");
 var C02 = Java.type("net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition");
 var S08 = Java.type('net.minecraft.network.play.server.S08PacketPlayerPosLook');
