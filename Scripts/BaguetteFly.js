@@ -27,15 +27,15 @@ script.registerModule({
 	description: "Be a bird",
 	category: "Movement",
 	settings: {
-		Mode: Setting.list({
-			name: "Mode",
-			default: "Redesky",
-			values: ["BoatMatrix","Matrix","Verus", "BrwServ","MatrixNoVoid","MatrixNoVoid2","BoatLastAAC","Cubecraft","Cubecraft2","NewMatrix","OldAntiAC","Redesky","Redesky2", "Redesky3", "Redesky4", "Redesky5","Redesky6/Taka", "NewAntiAC", "TestAntiAC", "ACR"]
-		}),
+	Mode: Setting.list({
+	    name: "Mode",
+	    default: "Redesky",
+	    values: ["BoatMatrix","Matrix","Verus", "BrwServ","MatrixNoVoid","MatrixNoVoid2","BoatLastAAC","Cubecraft","Cubecraft2","NewMatrix","OldAntiAC","Redesky","Redesky2", "Redesky3", "Redesky4", "Redesky5","Redesky6/Taka", "NewAntiAC", "TestAntiAC", "ACR"]
+	}),
         TimerBoost: Setting.boolean({
             name: "AntiAC-Boost",
             default: false
-		}),
+	}),
         ACRTicks: Setting.integer({
             name: "ACR-Ticks",
             default: 2,
@@ -48,84 +48,83 @@ script.registerModule({
             min: 0.01,
             max: 0.05
         }),
-		BrwTick: Setting.float({
-			name: "BrwSpeed",
-			default: 21.49,
-			min: 10,
-			max:40
-		}),
-		BrwTimer: Setting.float({
-			name: "BrwTimer",
-			default: 2,
-			min: 0.5,
-			max:3
-		}),
-		RedeV: Setting.float({
-			name: "RedeskyY",
-			default: 1.54,
-			min: 0.5,
-			max:4
-		}),
-		RedeBoost: Setting.float({
-			name: "RedeskyBoost",
-			default: 9.30,
-			min: 2,
-			max:12
-		}),
-		Rede5B: Setting.float({
-			name: "Redesky5Boost",
-			default: 3,
-			min: 1.0,
-			max:7
-		}),
-		Rede5Y: Setting.float({
-			name: "Redesky5Y",
-			default: 10,
-			min:4.0,
-			max:12
-		}),
-		RedeBlink: Setting.boolean({
-			name: "RedeskyUseBlink",
-			default: false
-		}),
-		RedeTimer: Setting.boolean({
-			name: "RedeskyTimerBoost",
-			default: false
-		}),
-		RedeTimerVal: Setting.float({
-			name: "RedeskyTimer",
-			default: 1.05,
-			min: 1.0,
-			max:1.2
-		}),
-		MsgOnToggle: Setting.boolean({
-			name: "ToggleMessage",
-			default: false
-		}),
-		BoatY: Setting.float({
-			name: "BoatY",
-			default: 0.5,
-			min:0.5,
-			max:5
-		}),
-		BoatBoost: Setting.float({
-			name: "BoatBoost",
-			default: 3,
-			min:3,
-			max:5
-		}),
-        	AutoSneak: Setting.boolean({
-            		name: "AutoSneak",
-            		default: true
-		}),
-                BoatJartex: Setting.boolean({
-            		name: "BoatJartex",
-            		default: true
-		}),
+	BrwTick: Setting.float({
+	    name: "BrwSpeed",
+	    default: 21.49,
+	    min: 10,
+	    max:40
+	}),
+	BrwTimer: Setting.float({
+	    name: "BrwTimer",
+	    default: 2,
+	    min: 0.5,
+	    max:3
+	}),
+	RedeV: Setting.float({
+	    name: "RedeskyY",
+	    default: 1.54,
+	    min: 0.5,
+	    max:4
+	}),
+	RedeBoost: Setting.float({
+	    name: "RedeskyBoost",
+	    default: 9.30,
+	    min: 2,
+	    max:12
+	}),
+	Rede5B: Setting.float({
+	    name: "Redesky5Boost",
+	    default: 3,
+	    min: 1.0,
+	    max:7
+	}),
+	Rede5Y: Setting.float({
+	    name: "Redesky5Y",
+	    default: 10,
+	    min:4.0,
+	    max:12
+	}),
+	RedeBlink: Setting.boolean({
+	    name: "RedeskyUseBlink",
+	    default: false
+	}),
+	RedeTimer: Setting.boolean({
+	    name: "RedeskyTimerBoost",
+	    default: false
+	}),
+	RedeTimerVal: Setting.float({
+	    name: "RedeskyTimer",
+	    default: 1.05,
+	    min: 1.0,
+	    max:1.2
+	}),
+	BoatY: Setting.float({
+	    name: "JartexBoatY",
+	    default: 0.5,
+	    min:0.5,
+	    max:5
+	}),
+	BoatBoost: Setting.float({
+	    name: "JartexBoatBoost",
+	    default: 3,
+	    min:3,
+	    max:5
+	}),
+        AutoSneak: Setting.boolean({
+            name: "JartexAutoSneak",
+            default: true
+	}),
+        BoatJartex: Setting.boolean({
+            name: "JartexBoatJartex",
+            default: true
+	}),
+	MsgOnToggle: Setting.boolean({
+	    name: "ToggleMessage",
+	    default: false
+	}),
 	}
 }, function (module) {
 	module.on("enable", function () {
-		Chat.print("§a§lCARILANA SCRIPTS GOT TERMED! JOIN NEW INVITE: https://discord.gg/UjAYw2xdq7")
  
 		jumpstate = 0;
 		mstate = 21.49;
