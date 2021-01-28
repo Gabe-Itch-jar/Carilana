@@ -5,8 +5,7 @@
 
 
 <hr>
-
-We develop various bypasses and modules for LiquidBounce. More information is given down below.
+We developed bypasses / modules for the LiquidBounce script API. If you want to see more information, check below.
 <hr>
 
 <details>
