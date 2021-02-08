@@ -1,7 +1,7 @@
 /// api_version=2
 var script = registerScript({
 	name: "Baguette Fly",
-	version: "2.3",
+	version: "3.0",
 	authors: ["Du_Couscous, mmk"]
 });
  
@@ -16,6 +16,8 @@ var ncp;
 var hivestate;
 var dist;
 var blink = moduleManager.getModule("Blink");
+var blocks = [];
+var jump = 0;
 function setSpeed(_speed) {
 	var playerYaw = Math.radians(mc.thePlayer.rotationYaw);
 	mc.thePlayer.motionX = _speed * -Math.sin(playerYaw);
@@ -29,25 +31,25 @@ script.registerModule({
 	settings: {
 	Mode: Setting.list({
 	    name: "Mode",
-	    default: "Redesky",
-	    values: ["BoatMatrix","Matrix","Verus", "BrwServ","MatrixNoVoid","MatrixNoVoid2","BoatLastAAC","Cubecraft","Cubecraft2","NewMatrix","OldAntiAC","Redesky","Redesky2", "Redesky3", "Redesky4", "Redesky5","Redesky6/Taka", "NewAntiAC", "TestAntiAC", "ACR"]
+	    default: "AACLongJump",
+	    values: ["OldBoatMatrix","OldMatrix","Verus", "BrwServ","OldMatrixNoVoid","OldMatrixNoVoid2","BoatLastAAC","OldCubecraft","OldCubecraft2","OldMatrix","OldAntiAC","OldRedesky","OldRedesky2", "OldRedesky3", "OldRedesky4", "OldRedesky5","OldRedesky6/Taka", "AACLongJump", "Matrix6.0.1Longjump" ,"NewAntiAC", "TestAntiAC", "ACR", "SpieleOase"]
 	}),
-        TimerBoost: Setting.boolean({
-            name: "AntiAC-Boost",
-            default: false
+    TimerBoost: Setting.boolean({
+        name: "AntiAC-Boost",
+        default: false
 	}),
-        ACRTicks: Setting.integer({
-            name: "ACR-Ticks",
-            default: 2,
-            min: 2,
-            max: 8
-        }),
-        ACRY: Setting.float({
-            name: "ACR-MotionY",
-            default: 0.02,
-            min: 0.01,
-            max: 0.05
-        }),
+    ACRTicks: Setting.integer({
+        name: "ACR-Ticks",
+        default: 7,
+        min: 2,
+        max: 8
+    }),
+    ACRY: Setting.float({
+        name: "ACR-MotionY",
+        default: 0.03,
+        min: 0.01,
+        max: 0.05
+    }),
 	BrwTick: Setting.float({
 	    name: "BrwSpeed",
 	    default: 21.49,
@@ -61,39 +63,39 @@ script.registerModule({
 	    max:3
 	}),
 	RedeV: Setting.float({
-	    name: "RedeskyY",
+	    name: "OldRedeskyY",
 	    default: 1.54,
 	    min: 0.5,
 	    max:4
 	}),
 	RedeBoost: Setting.float({
-	    name: "RedeskyBoost",
+	    name: "OldRedeskyBoost",
 	    default: 9.30,
 	    min: 2,
 	    max:12
 	}),
 	Rede5B: Setting.float({
-	    name: "Redesky5Boost",
+	    name: "OldRedesky5Boost",
 	    default: 3,
 	    min: 1.0,
 	    max:7
 	}),
 	Rede5Y: Setting.float({
-	    name: "Redesky5Y",
+	    name: "OldRedesky5Y",
 	    default: 10,
 	    min:4.0,
 	    max:12
 	}),
 	RedeBlink: Setting.boolean({
-	    name: "RedeskyUseBlink",
+	    name: "OldRedeskyUseBlink",
 	    default: false
 	}),
 	RedeTimer: Setting.boolean({
-	    name: "RedeskyTimerBoost",
+	    name: "OldRedeskyTimerBoost",
 	    default: false
 	}),
 	RedeTimerVal: Setting.float({
-	    name: "RedeskyTimer",
+	    name: "OldRedeskyTimer",
 	    default: 1.05,
 	    min: 1.0,
 	    max:1.2
@@ -110,13 +112,13 @@ script.registerModule({
 	    min:3,
 	    max:5
 	}),
-        AutoSneak: Setting.boolean({
-            name: "JartexAutoSneak",
-            default: true
+    AutoSneak: Setting.boolean({
+        name: "JartexAutoSneak",
+        default: true
 	}),
-        BoatJartex: Setting.boolean({
-            name: "JartexBoatJartex",
-            default: true
+    BoatJartex: Setting.boolean({
+        name: "JartexBoatJartex",
+        default: true
 	}),
 	MsgOnToggle: Setting.boolean({
 	    name: "ToggleMessage",
@@ -130,24 +132,34 @@ script.registerModule({
 		mstate = 21.49;
 		dist = mc.thePlayer.posY;
 		mc.thePlayer.ticksExisted = 0;
-		if (module.settings.Mode.get() == "Cubecraft") {
+		if (module.settings.Mode.get() == "OldCubecraft") {
 		  	MovementUtils.setSpeed(0.0);
 		  	mc.thePlayer.motionY = -0.800000011920929;
 		}
+
+		if (module.settings.Mode.get() == "AACLongJump") {
+			candisable = false;
+		}
+
 		if (module.settings.Mode.get() == "ACR") {
+			Chat.print("§b[BaguetteFly] §cWorks for 5 blocks, try to change the settings and find a better bypass")
 			mc.timer.timerSpeed = 1;
 			jumpstate = 0;
         }
 		if (module.settings.Mode.get() == "NewAntiAC" && module.settings.TimerBoost.get()) {
             mc.timer.timerSpeed = 2;
         }
-		if (module.settings.Mode.get() == "Redesky") {
+		if (module.settings.Mode.get() == "OldRedesky") {
 			if (module.settings.RedeBlink.get() == true) {
 				blink.setState(true);
 			}
 			if (mc.thePlayer.onGround) {
 				vClip(module.settings.RedeV.get());
 			}
+		}
+
+		if (module.settings.Mode.get() == "SpieleOase") {
+			ncpDamage();
 		}
  
         if (module.settings.Mode.get() == "ACR") {
@@ -160,10 +172,10 @@ script.registerModule({
             mc.thePlayer.setSprinting(false);
         }
  
-		if (module.settings.Mode.get() == "Redesky5") {
+		if (module.settings.Mode.get() == "OldRedesky5") {
 			dist = mc.thePlayer.posY
 		}
-		if (module.settings.Mode.get() == "Redesky2") {
+		if (module.settings.Mode.get() == "OldRedesky2") {
 			if (mc.thePlayer.onGround) {
 				hClip2(10);
 				vClip2(10);
@@ -177,10 +189,10 @@ script.registerModule({
 			mc.timer.timerSpeed = module.settings.BrwTimer.get();
 			mstate = module.settings.BrwTick.get();
 		}
-		if (module.settings.Mode.get() == "Matrix") {
+		if (module.settings.Mode.get() == "OldMatrix") {
 			mc.timer.timerSpeed = 0.2;
 		}
-		if (module.settings.Mode.get() == "MatrixNoVoid") {
+		if (module.settings.Mode.get() == "OldMatrixNoVoid") {
 			mc.timer.timerSpeed = 0.4;
 		}
 		matrixfly = 0;
@@ -205,7 +217,7 @@ script.registerModule({
 			event.setX(0);
 			event.setZ(0);
 		}
-		if(module.settings.Mode.get() == "Redesky5") {
+		if(module.settings.Mode.get() == "OldRedesky5") {
 			if(mc.gameSettings.keyBindJump.isKeyDown() == true) {
 				vClip2(4.151)
 			}
@@ -214,15 +226,15 @@ script.registerModule({
 	module.on("disable", function () {
 		mc.thePlayer.capabilities.flying = false;
 		mc.timer.timerSpeed = 1;
+		mc.thePlayer.speedInAir = 0.02;
 		blink.setState(false)
 		if (module.settings.RedeBlink.get() == true) {
 			blink.setState(true);
 			blink.setState(false);
 		}
 		ncp = 0;
-		mc.thePlayer.speedinAir = 0.02;
 		setSpeed(0);
-		if (module.settings.Mode.get() == "Redesky") {
+		if (module.settings.Mode.get() == "OldRedesky") {
 			hClip2(0);
 		}
 	});
@@ -232,7 +244,7 @@ var matrixfly = 0;
 var sword;
 	module.on("update", function () {
  
-		if (module.settings.Mode.get() == "BoatMatrix") {
+		if (module.settings.Mode.get() == "OldBoatMatrix") {
 			if (mc.thePlayer.isRiding()) {
 			if (module.settings.AutoSneak.get()) {
 			mc.gameSettings.keyBindSneak.pressed = true;
@@ -256,6 +268,50 @@ var sword;
 			}
 		}
  
+		if (module.settings.Mode.get() == "AACLongJump") {
+			mc.timer.timerSpeed = 1;
+        
+        	if (mc.thePlayer.onGround && candisable) {
+            	module.toggle();
+            	return;
+        	}
+        
+        	if (mc.thePlayer.onGround) {
+           		mc.thePlayer.jump();
+            	mc.thePlayer.speedInAir = 0.05;
+            	candisable = true;
+        	}
+			if (mc['thePlayer']['fallDistance'] > -0x12e * -0x18 + 0x1 * -0x1f67 + 0x317) {
+    			if (mc['thePlayer']['fallDistance'] < -0x19a3 * -0x1 + 0x810 + -0x10d9 * 0x2) {
+        			mc['thePlayer']['speedInAir'] *= 0x237e + -0x1 * -0x1dd5 + -16722.15;
+        			mc['thePlayer']['motionY'] *= 0x2525 + 0x7 * -0xb + -9431.25;
+    			} else if (mc['thePlayer']['fallDistance'] < -0x1fba + 0x1da3 + 0x3 * 0xb3) {
+        			mc['thePlayer']['speedInAir'] *= -0x166 * -0x5 + 0xb41 + -4670.25;
+        			mc['thePlayer']['motionY'] *= 0x892 + 0x450 + -3297.15;
+    			} else {
+        			mc['thePlayer']['speedInAir'] = -0x1a * 0xd6 + -0x25e2 + 15262.02;
+    			}
+			}
+        	if (mc.thePlayer.motionY > 0) {
+            	if (mc.thePlayer.motionY < 0.3) {
+                	mc.thePlayer.motionY *= 1.25;
+                	mc.thePlayer.speedInAir *= 1.21;
+            	}
+        	}
+		}
+
+		if (module.settings.Mode.get() == "Matrix6.0.1Longjump") {
+			if (mc.theWorld.isAirBlock(new BlockPos(mc.thePlayer.posX,mc.thePlayer.posY-1,mc.thePlayer.posZ)) || mc.thePlayer.inWater) {
+            	if (mc.thePlayer.fallDistance >= 1) {
+                	mc.theWorld.setBlockState(new BlockPos(mc.thePlayer.posX, mc.thePlayer.posY-1, mc.thePlayer.posZ), Blocks.barrier.getDefaultState());
+                	blocks.push(new BlockPos(mc.thePlayer.posX,mc.thePlayer.posY-1,mc.thePlayer.posZ));
+            	}
+        	}
+        	if (mc.thePlayer.onGround) {
+            	mc.thePlayer.jump();
+        	}
+		}
+
         if (module.settings.Mode.get() == "ACR") {
             setSpeed(0.2*mc.thePlayer.moveForward);
             if (mc.thePlayer.ticksExisted % module.settings.ACRTicks.get() == 0 && !mc.thePlayer.onGround) {
@@ -266,7 +322,7 @@ var sword;
             mc.thePlayer.setSprinting(false);
         }
  
-		if (module.settings.Mode.get() == "Matrix") {
+		if (module.settings.Mode.get() == "OldMatrix") {
             if (mc.thePlayer.fallDistance > 3) {
                 mc.timer.timerSpeed = 0.2;
                 mc.thePlayer.onGround = false;
@@ -308,7 +364,7 @@ var sword;
 			}
 		}
  
-		if (module.settings.Mode.get() == "Redesky") {
+		if (module.settings.Mode.get() == "OldRedesky") {
 			mc.timer.timerSpeed = 0.3;
 			if(module.settings.RedeTimer.get() == true) {
 				mc.timer.timerSpeed = module.settings.RedeTimerVal.get();
@@ -335,7 +391,7 @@ var sword;
 			mc.thePlayer.motionY = -0.01;
 		}
  
-		if(module.settings.Mode.get() == "Redesky3") {
+		if(module.settings.Mode.get() == "OldRedesky3") {
 			if (mc.thePlayer.onGround) {
 				Chat.print("§b[BaguetteFly] §cYou must jump into the void and activate this fly!")
 				Chat.print("§b[BaguetteFly] §c[Disabled]")
@@ -354,7 +410,7 @@ var sword;
 		}
  
  
-		if(module.settings.Mode.get() == "Redesky4") {
+		if(module.settings.Mode.get() == "OldRedesky4") {
 			if (mc.thePlayer.onGround) {
 				Chat.print("§b[BaguetteFly] §cYou must jump into the void and activate this fly!")
 				Chat.print("§b[BaguetteFly] §c[Disabled]")
@@ -369,7 +425,7 @@ var sword;
 			}
 		}
  
-		if(module.settings.Mode.get() == "Redesky5") {
+		if(module.settings.Mode.get() == "OldRedesky5") {
 			yClip(dist)
             hClip(module.settings.Rede5B.get())
             hClip2(2)
@@ -389,7 +445,7 @@ var sword;
 			}
 		}
  
-		if (module.settings.Mode.get() == "MatrixNoVoid") {
+		if (module.settings.Mode.get() == "OldMatrixNoVoid") {
 			if (mc.thePlayer.onGround) {
 				mc.thePlayer.jump();
 			}
@@ -412,15 +468,19 @@ var sword;
 				mc.thePlayer.fallDistance = 0;
 			}
 		}
+		if (module.settings.Mode.get() == "SpieleOase") {
+			yClip(dist);
+		}
+		});
  
  
 		if (fstate == 7 || fstate == 4 || fstate == 14 || fstate == 17) {
-			if (module.settings.Mode.get() == "MatrixNoVoid" && mc.thePlayer.fallDistance >= 1) {
+			if (module.settings.Mode.get() == "OldMatrixNoVoid" && mc.thePlayer.fallDistance >= 1) {
 				mc.thePlayer.motionY = -0.05;
 			}
 		}
  
-		if (module.settings.Mode.get() == "Cubecraft") {
+		if (module.settings.Mode.get() == "OldCubecraft") {
 			mc.timer.timerSpeed = 0.1;
 			mc.thePlayer.onGround = false;
 			mc.thePlayer.jumpMovementFactor = 0.0;
@@ -445,7 +505,7 @@ var sword;
 			}
 		}
  
-		if (module.settings.Mode.get() == "AntiAC") {
+		if (module.settings.Mode.get() == "OldAntiAC") {
 			mc.timer.timerSpeed = 2;
 			mc.thePlayer.onGround = false;
 			mc.thePlayer.jumpMovementFactor = 0.0;
@@ -464,7 +524,7 @@ var sword;
 			}
 		}
  
-		if (module.settings.Mode.get() == "Redesky6/Taka") {
+		if (module.settings.Mode.get() == "OldRedesky6/Taka") {
 			mc.thePlayer.onGround = true;
 			mc.thePlayer.jumpMovementFactor = 0.0;
 			mc.thePlayer.motionY = -0.05;
@@ -496,7 +556,7 @@ var sword;
 			}
 		}
  
-		if (module.settings.Mode.get() == "MatrixNoVoid2") {
+		if (module.settings.Mode.get() == "OldMatrixNoVoid") {
 			if (mc.thePlayer.fallDistance > 3) {
 				mc.timer.timerSpeed = 0.4;
 				mc.thePlayer.onGround = false;
@@ -507,7 +567,7 @@ var sword;
 		}
  
 		if (fstate == 7 || fstate == 14 || fstate == 17) {
-			if (module.settings.Mode.get() == "Matrix" && mc.thePlayer.fallDistance >= 2) {
+			if (module.settings.Mode.get() == "OldMatrix" && mc.thePlayer.fallDistance >= 2) {
 				mc.thePlayer.motionY = -0.05;
 			}
 		}
@@ -520,7 +580,6 @@ var sword;
 			}
 		});
 	});
-});
  
  
 //functions
@@ -595,7 +654,10 @@ var C04 = Java.type("net.minecraft.network.play.client.C03PacketPlayer.C04Packet
 var C02 = Java.type("net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition");
 var S08 = Java.type('net.minecraft.network.play.server.S08PacketPlayerPosLook');
 var S12 = Java.type('net.minecraft.network.play.server.S12PacketEntityVelocity');
- 
+var BlockPos = Java.type('net.minecraft.util.BlockPos');
+var Block = Java.type('net.minecraft.block.Block');
+var Blocks = Java.type('net.minecraft.init.Blocks');
+
 Math.radians = function(degrees) {
 	return degrees * Math.PI / 180;
 };
