@@ -5,7 +5,7 @@
 
 
 <hr>
-We develop bypasses / modules for the LiquidBounce script API. If you want to see more information, check below.
+We develop bypasses / modules Minecraft servers and anticheats via the LiquidBounce script API. If you want to see more information, check below.
 <hr>
 
 <details>
@@ -16,7 +16,7 @@ We develop bypasses / modules for the LiquidBounce script API. If you want to se
 </details>
 
 <details>
-      <summary>Pull Requests</summary>
+      <summary>Contributions</summary>
   <p align=center>
     If you would like to contribute, feel free to add anything and we will most likely accept it.
   </p>
@@ -32,14 +32,14 @@ We develop bypasses / modules for the LiquidBounce script API. If you want to se
 <details>
       <summary>Tutorials</summary>
   <p align=center>
-    The tutorials can be found inside the Tutorials folder. If you want, you can request more tutorials to be added.
+    Tutorials can be found inside of the Tutorials folder, If you want a new tutorial please create a new issue on the respository ;D
   </p>
 </details>
 
 <details>
       <summary>More Scripts</summary>
   <p align=center>
-    Some good sources for scripts are: https://github.com/CzechHek/Core/Scripts
+    Good sources for scripts are: https://github.com/CzechHek/Core/Scripts
                                        https://forums.ccbluex.net/category/9/scripts // https://forum.ccbluex.net/viewforum.php?id=16 (Old)
                                        Our Discord channel for sharing scripts, configs and more.
   </p>
