@@ -2,7 +2,7 @@
 var script = registerScript({
 	name: "Baguette Fly",
 	version: "3.0",
-	authors: ["Du_Couscous, mmk"]
+	authors: ["Du_Couscous", "mmk"]
 });
  
 var fstate = 0;
