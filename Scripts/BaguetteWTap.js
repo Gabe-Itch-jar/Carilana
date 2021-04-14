@@ -2,7 +2,7 @@
 var script = registerScript({
     name: "Baguette Script",
     version: "1.2",
-    authors: ["Du_Couscous, mmk"]
+    authors: ["Du_Couscous", "mmk", "Gowixx"]
 });
 
 script.registerModule({
