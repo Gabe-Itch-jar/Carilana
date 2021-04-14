@@ -4,4 +4,5 @@ Press the `WIN`+`R` keys and type `%appdata%/.minecraft`<br />
 Find the folder named `LiquidBounce-1.8`<br />
 Inside that folder there should be another folder named `scripts`<br />
 Drag your script in, then go into Minecraft and type `.scripts reload`<br />
-To enable the script type `.scripts enable ScriptNameHere`<br /><br />
+To enable the script type `.scripts enable ScriptNameHere`<br />
+Alternatively, you can type  `.scripts reload`
