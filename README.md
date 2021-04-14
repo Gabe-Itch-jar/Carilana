@@ -32,7 +32,7 @@ We develop bypasses / modules Minecraft servers and anticheats via the LiquidBou
 <details>
       <summary>Tutorials</summary>
   <p align=center>
-    Tutorials can be found inside of the Tutorials folder, If you want a new tutorial please create a new issue on the respository ;D
+    Tutorials can be found inside of the Tutorials folder, If you want a new tutorial please create a new issue on the respository and it will be reviwed as soon as possible
   </p>
 </details>
 
